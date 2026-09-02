@@ -16,9 +16,8 @@ void main() {
     expect(find.text('ClientSphere Foundation'), findsOneWidget);
     expect(find.text('Theme Controls'), findsOneWidget);
     expect(find.text('Active Mode: LIGHT'), findsOneWidget);
-    expect(find.text('Core Interactive Components'), findsOneWidget);
-    expect(find.text('Lead Full Name'), findsOneWidget);
-    expect(find.text('Save Lead to Pipeline'), findsOneWidget);
+    expect(find.text('Pipeline Revenue'), findsOneWidget);
+    expect(find.text('At-Risk Deals'), findsOneWidget);
 
     // 1. Select Dark chip
     final darkChip = find.widgetWithText(ChoiceChip, 'Dark');
@@ -38,13 +37,37 @@ void main() {
     expect(controller.value, ThemeMode.light);
     expect(find.text('Active Mode: LIGHT'), findsOneWidget);
 
-    // 3. Tap Save Lead button to toggle loading state
+    // 3. Scroll down slightly to center interactive form components
+    await tester.drag(find.byType(ListView), const Offset(0, -350));
+    await tester.pump(const Duration(milliseconds: 300));
+
+    expect(find.text('Core Interactive Components'), findsOneWidget);
+    expect(find.text('Lead Full Name'), findsOneWidget);
+
+    // Tap Save Lead button to toggle loading state
     final saveButton = find.text('Save Lead to Pipeline');
+    expect(saveButton, findsOneWidget);
     await tester.tap(saveButton);
     await tester.pump();
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
 
-    // 4. Scroll down to verify CRM semantic tokens card
+    // Toggle button loading back off
+    await tester.tap(find.byType(ElevatedButton));
+    await tester.pump();
+
+    // 4. Scroll down further to verify CRM state views
+    await tester.drag(find.byType(ListView), const Offset(0, -450));
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(find.text('CRM State Views'), findsOneWidget);
+    expect(find.text('No Closed Deals'), findsOneWidget);
+
+    // Switch to Error State view
+    final errorChip = find.widgetWithText(ChoiceChip, 'Error State');
+    await tester.tap(errorChip);
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(find.text('Sync Failed'), findsOneWidget);
+
+    // 5. Scroll further down to verify CRM semantic tokens card
     await tester.drag(find.byType(ListView), const Offset(0, -600));
     await tester.pump(const Duration(milliseconds: 300));
     expect(find.text('Success'), findsOneWidget);
