@@ -40,6 +40,12 @@ class ThemeScope extends InheritedNotifier<ThemeController> {
     required super.child,
   }) : super(notifier: controller);
 
+  /// Retrieves the nearest [ThemeController] from the widget tree, or null if none is found.
+  static ThemeController? maybeOf(BuildContext context) {
+    final scope = context.dependOnInheritedWidgetOfExactType<ThemeScope>();
+    return scope?.notifier;
+  }
+
   /// Retrieves the nearest [ThemeController] from the widget tree.
   static ThemeController of(BuildContext context) {
     final scope = context.dependOnInheritedWidgetOfExactType<ThemeScope>();
