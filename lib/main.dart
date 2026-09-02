@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'core/components/components.dart';
 import 'core/theme/theme.dart';
 
 void main() {
@@ -37,9 +38,19 @@ class ClientSphereApp extends StatelessWidget {
   }
 }
 
-/// A functional preview and validation screen for Micro-Slice 1 UI foundation tokens.
-class FoundationShowcaseScreen extends StatelessWidget {
+/// A functional preview and validation screen for UI foundation tokens and interactive form components.
+class FoundationShowcaseScreen extends StatefulWidget {
   const FoundationShowcaseScreen({super.key});
+
+  @override
+  State<FoundationShowcaseScreen> createState() =>
+      _FoundationShowcaseScreenState();
+}
+
+class _FoundationShowcaseScreenState extends State<FoundationShowcaseScreen> {
+  String _searchQuery = '';
+  bool _isButtonLoading = false;
+  bool _showInputError = false;
 
   @override
   Widget build(BuildContext context) {
@@ -99,6 +110,118 @@ class FoundationShowcaseScreen extends StatelessWidget {
                         selected: themeController.value == ThemeMode.dark,
                         onSelected: (_) =>
                             themeController.setThemeMode(ThemeMode.dark),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          AppSpacing.gapH16,
+
+          // Interactive Components Showcase (Micro-Slice 2)
+          Card(
+            child: Padding(
+              padding: AppSpacing.cardPadding,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Core Interactive Components',
+                    style: theme.textTheme.titleMedium,
+                  ),
+                  AppSpacing.gapH16,
+
+                  // Search Field
+                  AppSearchField(
+                    hint: 'Search CRM leads or contacts...',
+                    onChanged: (val) {
+                      setState(() {
+                        _searchQuery = val;
+                      });
+                    },
+                    onClear: () {
+                      setState(() {
+                        _searchQuery = '';
+                      });
+                    },
+                  ),
+                  if (_searchQuery.isNotEmpty) ...[
+                    AppSpacing.gapH8,
+                    Text(
+                      'Search Query: "$_searchQuery"',
+                      style: theme.textTheme.bodySmall,
+                    ),
+                  ],
+                  AppSpacing.gapH16,
+
+                  // Form Inputs
+                  AppTextField(
+                    label: 'Lead Full Name',
+                    hint: 'e.g. John Doe',
+                    isRequired: true,
+                    prefixIcon: const Icon(Icons.person_outline_rounded, size: 20),
+                    errorText: _showInputError ? 'Lead name is required' : null,
+                  ),
+                  AppSpacing.gapH12,
+
+                  AppTextField(
+                    label: 'Portal Password',
+                    hint: 'Enter client portal access key',
+                    obscureText: true,
+                    enablePasswordToggle: true,
+                    prefixIcon: const Icon(Icons.lock_outline_rounded, size: 20),
+                  ),
+                  AppSpacing.gapH16,
+
+                  // Interactive Buttons
+                  AppPrimaryButton(
+                    text: 'Save Lead to Pipeline',
+                    icon: Icons.check_circle_outline_rounded,
+                    isLoading: _isButtonLoading,
+                    onPressed: () {
+                      setState(() {
+                        _isButtonLoading = !_isButtonLoading;
+                      });
+                    },
+                  ),
+                  AppSpacing.gapH8,
+
+                  AppSecondaryButton(
+                    text: 'Cancel / Reset Form',
+                    icon: Icons.cancel_outlined,
+                    onPressed: () {
+                      setState(() {
+                        _showInputError = !_showInputError;
+                        _isButtonLoading = false;
+                      });
+                    },
+                  ),
+                  AppSpacing.gapH16,
+
+                  // Icon Buttons Row
+                  Row(
+                    children: [
+                      Text('Icon Actions:', style: theme.textTheme.labelMedium),
+                      AppSpacing.gapW12,
+                      AppIconButton(
+                        icon: Icons.phone_outlined,
+                        tooltip: 'Call contact',
+                        onPressed: () {},
+                      ),
+                      AppSpacing.gapW8,
+                      AppIconButton(
+                        icon: Icons.email_outlined,
+                        tooltip: 'Email contact',
+                        variant: AppIconButtonVariant.filled,
+                        onPressed: () {},
+                      ),
+                      AppSpacing.gapW8,
+                      AppIconButton(
+                        icon: Icons.edit_outlined,
+                        tooltip: 'Edit record',
+                        variant: AppIconButtonVariant.outlined,
+                        onPressed: () {},
                       ),
                     ],
                   ),

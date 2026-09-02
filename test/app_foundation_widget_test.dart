@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('ClientSphereApp boots and toggles themes interactively', (
+  testWidgets('ClientSphereApp boots, toggles themes, and operates form components', (
     WidgetTester tester,
   ) async {
     final controller = ThemeController(ThemeMode.light);
@@ -12,17 +12,15 @@ void main() {
     await tester.pumpWidget(ClientSphereApp(themeController: controller));
     await tester.pumpAndSettle();
 
-    // Verify main foundation screen loaded
+    // Verify main foundation screen and initial controls are loaded
     expect(find.text('ClientSphere Foundation'), findsOneWidget);
     expect(find.text('Theme Controls'), findsOneWidget);
     expect(find.text('Active Mode: LIGHT'), findsOneWidget);
+    expect(find.text('Core Interactive Components'), findsOneWidget);
+    expect(find.text('Lead Full Name'), findsOneWidget);
+    expect(find.text('Save Lead to Pipeline'), findsOneWidget);
 
-    // Verify CRM semantic chips are present
-    expect(find.text('Success'), findsOneWidget);
-    expect(find.text('Won Deal'), findsOneWidget);
-    expect(find.text('Lost Deal'), findsOneWidget);
-
-    // Select Dark chip
+    // 1. Select Dark chip
     final darkChip = find.widgetWithText(ChoiceChip, 'Dark');
     expect(darkChip, findsOneWidget);
     await tester.tap(darkChip);
@@ -31,7 +29,7 @@ void main() {
     expect(controller.value, ThemeMode.dark);
     expect(find.text('Active Mode: DARK'), findsOneWidget);
 
-    // Tap AppBar theme toggle button (switches Dark -> Light)
+    // 2. Tap AppBar theme toggle button (switches Dark -> Light)
     final toggleButton = find.byTooltip('Toggle Theme');
     expect(toggleButton, findsOneWidget);
     await tester.tap(toggleButton);
@@ -39,5 +37,18 @@ void main() {
 
     expect(controller.value, ThemeMode.light);
     expect(find.text('Active Mode: LIGHT'), findsOneWidget);
+
+    // 3. Tap Save Lead button to toggle loading state
+    final saveButton = find.text('Save Lead to Pipeline');
+    await tester.tap(saveButton);
+    await tester.pump();
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+
+    // 4. Scroll down to verify CRM semantic tokens card
+    await tester.drag(find.byType(ListView), const Offset(0, -600));
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(find.text('Success'), findsOneWidget);
+    expect(find.text('Won Deal'), findsOneWidget);
+    expect(find.text('Lost Deal'), findsOneWidget);
   });
 }
