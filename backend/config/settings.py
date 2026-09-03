@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'apps.authentication',
     'apps.contacts',
     'apps.companies',
+    'apps.leads',
 ]
 
 AUTH_USER_MODEL = 'authentication.User'
