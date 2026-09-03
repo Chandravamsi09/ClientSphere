@@ -36,6 +36,7 @@ class ApiRootView(APIView):
                 "architecture": "Django + DRF + PostgreSQL",
                 "endpoints": {
                     "health": request.build_absolute_uri("health/"),
+                    "auth": request.build_absolute_uri("/api/auth/"),
                     "admin": request.build_absolute_uri("/admin/"),
                 },
                 "status": "Foundation Ready",

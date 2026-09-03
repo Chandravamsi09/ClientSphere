@@ -41,9 +41,12 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
-    # ClientSphere Core App
+    # ClientSphere Core Apps
     'apps.core',
+    'apps.authentication',
 ]
+
+AUTH_USER_MODEL = 'authentication.User'
 
 MIDDLEWARE = [
     # CorsMiddleware must be placed as high as possible, especially before CommonMiddleware
