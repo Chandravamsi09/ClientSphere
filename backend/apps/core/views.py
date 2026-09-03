@@ -41,6 +41,7 @@ class ApiRootView(APIView):
                     "companies": request.build_absolute_uri("/api/companies/"),
                     "leads": request.build_absolute_uri("/api/leads/"),
                     "deals": request.build_absolute_uri("/api/deals/"),
+                    "pipeline": request.build_absolute_uri("/api/pipeline/"),
                     "admin": request.build_absolute_uri("/admin/"),
                 },
                 "status": "Foundation Ready",

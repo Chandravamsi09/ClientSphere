@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'apps.companies',
     'apps.leads',
     'apps.deals',
+    'apps.pipeline',
 ]
 
 AUTH_USER_MODEL = 'authentication.User'
