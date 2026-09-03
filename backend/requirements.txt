@@ -1,1 +1,10 @@
-﻿Flask==3.0.0
+# ClientSphere CRM - Backend Dependencies (Django + DRF + PostgreSQL)
+Django>=5.0,<7.0
+djangorestframework>=3.14.0
+django-cors-headers>=4.3.0
+djangorestframework-simplejwt>=5.3.0
+psycopg2-binary>=2.9.9
+python-dotenv>=1.0.0
+
+# Legacy reference dependency (preserved until full transition)
+Flask==3.0.0
