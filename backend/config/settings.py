@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # ClientSphere Core Apps
     'apps.core',
     'apps.authentication',
+    'apps.contacts',
 ]
 
 AUTH_USER_MODEL = 'authentication.User'
