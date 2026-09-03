@@ -40,6 +40,7 @@ class ApiRootView(APIView):
                     "contacts": request.build_absolute_uri("/api/contacts/"),
                     "companies": request.build_absolute_uri("/api/companies/"),
                     "leads": request.build_absolute_uri("/api/leads/"),
+                    "deals": request.build_absolute_uri("/api/deals/"),
                     "admin": request.build_absolute_uri("/admin/"),
                 },
                 "status": "Foundation Ready",
