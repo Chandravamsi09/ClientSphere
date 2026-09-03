@@ -1,0 +1,1 @@
+"""ClientSphere Sales Pipeline Module."""
