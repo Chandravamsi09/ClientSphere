@@ -38,6 +38,7 @@ class ApiRootView(APIView):
                     "health": request.build_absolute_uri("health/"),
                     "auth": request.build_absolute_uri("/api/auth/"),
                     "contacts": request.build_absolute_uri("/api/contacts/"),
+                    "companies": request.build_absolute_uri("/api/companies/"),
                     "admin": request.build_absolute_uri("/admin/"),
                 },
                 "status": "Foundation Ready",
